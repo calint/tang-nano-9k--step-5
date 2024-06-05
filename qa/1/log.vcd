@@ -1,0 +1,72 @@
+$date
+	Wed Jun  5 09:34:15 2024
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module TestBench $end
+$var wire 32 ! data_out [31:0] $end
+$var parameter 32 " clk_tk $end
+$var reg 32 # address [31:0] $end
+$var reg 1 $ clk $end
+$var reg 32 % data_in [31:0] $end
+$var reg 1 & write_enable $end
+$scope module data $end
+$var wire 16 ' address [15:0] $end
+$var wire 1 $ clk $end
+$var wire 32 ( data_in [31:0] $end
+$var wire 1 & write_enable $end
+$var parameter 32 ) ADDRESS_BITWIDTH $end
+$var parameter 32 * DATA_BITWIDTH $end
+$var parameter 0 + DATA_FILE $end
+$var reg 32 , data_out [31:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b +
+b100000 *
+b10000 )
+b100 "
+$end
+#0
+$dumpvars
+bx ,
+b0 (
+b0 '
+0&
+b0 %
+1$
+b0 #
+bx !
+$end
+#2000
+0$
+#4000
+b10101011110011011110111100010010 %
+b10101011110011011110111100010010 (
+1&
+1$
+#6000
+0$
+#8000
+0&
+1$
+#10000
+0$
+#12000
+b10101011110011011110111100010010 !
+b10101011110011011110111100010010 ,
+1$
+#14000
+0$
+#16000
+1$
+#18000
+0$
+#20000
+1$

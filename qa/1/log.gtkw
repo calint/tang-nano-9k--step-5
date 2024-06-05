@@ -1,0 +1,28 @@
+[*]
+[*] GTKWave Analyzer v3.3.116 (w)1999-2023 BSI
+[*] Wed Jun  5 07:32:55 2024
+[*]
+[dumpfile] "/home/c/w/tang-nano-9k--step-5/qa/1/log.vcd"
+[dumpfile_mtime] "Wed Jun  5 07:32:21 2024"
+[dumpfile_size] 1039
+[savefile] "/home/c/w/tang-nano-9k--step-5/qa/1/log.gtkw"
+[timestart] 0
+[size] 1910 1024
+[pos] -457 -214
+*-11.407099 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 269
+[signals_width] 142
+[sst_expanded] 1
+[sst_vpaned_height] 304
+@28
+TestBench.clk
+@22
+TestBench.address[31:0]
+@28
+TestBench.write_enable
+@22
+TestBench.data_in[31:0]
+@23
+TestBench.data_out[31:0]
+[pattern_trace] 1
+[pattern_trace] 0
