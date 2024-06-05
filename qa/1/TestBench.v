@@ -34,21 +34,11 @@ module TestBench;
     // clear the cache
     for (i = 0; i < 2 ** 10; i = i + 1) begin
       cache.tag.data[i]   = 0;
-      cache.data0.data[i] = 0;
-      cache.data1.data[i] = 0;
-      cache.data2.data[i] = 0;
-      cache.data3.data[i] = 0;
+      cache.data0.data[i] = 4*i+1;
+      cache.data1.data[i] = 4*i+2;
+      cache.data2.data[i] = 4*i+3;
+      cache.data3.data[i] = 4*i+4;
     end
-
-    #clk_tk;
-    sys_rst_n <= 1;
-    #clk_tk;
-
-    // write
-    address <= 4;
-    data_in <= 32'habcd_ef12;
-    write_enable <= 1;
-    #clk_tk;
 
     // // dump the cache
     // for (i = 0; i < 8; i = i + 1) begin
@@ -56,10 +46,24 @@ module TestBench;
     //            cache.data1.data[i], cache.data2.data[i], cache.data3.data[i]);
     // end
 
+    #clk_tk;
+    sys_rst_n <= 1;
+
+    // write
+    address <= 4;
+    data_in <= 32'habcd_ef12;
+    write_enable <= 1;
+    #clk_tk;
+
     // write
     address <= 8;
     data_in <= 32'habcd_1234;
     write_enable <= 1;
+    #clk_tk;
+
+    // read; cache hit
+    address <= 4;
+    write_enable <= 0;
     #clk_tk;
 
     // one cycle delay. value for address 4
@@ -67,25 +71,29 @@ module TestBench;
     else $display("Test 1 FAILED");
 
     // read; cache hit
-    address <= 4;
-    write_enable <= 0;
-    #clk_tk;
-
-    // read; cache hit
     address <= 8;
-    write_enable <= 0;
-    #clk_tk;
-
-    // read; not valid
-    address <= 16;
     write_enable <= 0;
     #clk_tk;
 
     if (data_out == 32'habcd_1234 && data_out_valid) $display("Test 2 passed");
     else $display("Test 2 FAILED");
 
+    // read; not valid
+    address <= 16;
+    write_enable <= 0;
+    #clk_tk;
+
     if (!data_out_valid) $display("Test 3 passed");
     else $display("Test 3 FAILED");
+
+    // read; not valid
+    address <= 20;
+    write_enable <= 0;
+    #clk_tk;
+
+    if (!data_out_valid) $display("Test 3 passed");
+    else $display("Test 3 FAILED");
+
 
     #clk_tk;
     #clk_tk;

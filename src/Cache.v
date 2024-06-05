@@ -88,13 +88,19 @@ module Cache #(
   reg write_enable_2;
   reg write_enable_3;
 
+  // assign data_out = column_ix == 0 ? data0_out : 
+  //                   column_ix == 1 ? data1_out : 
+  //                   column_ix == 2 ? data2_out :
+  //                   column_ix == 3 ? data3_out : 32'hffff_ffff;
+
+  // assign data_out_valid = line_valid && line_tag_in == line_tag;
+
   always @(*) begin
     case (column_ix)
       0: data_out = data0_out;
       1: data_out = data1_out;
       2: data_out = data2_out;
       3: data_out = data3_out;
-      default: data_out = 32'hffff_ffff;
     endcase
   end
 
