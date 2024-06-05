@@ -34,10 +34,10 @@ module TestBench;
     // clear the cache
     for (i = 0; i < 2 ** 10; i = i + 1) begin
       cache.tag.data[i]   = 0;
-      cache.data0.data[i] = 4*i+1;
-      cache.data1.data[i] = 4*i+2;
-      cache.data2.data[i] = 4*i+3;
-      cache.data3.data[i] = 4*i+4;
+      cache.data0.data[i] = 32'hffff_ffff;
+      cache.data1.data[i] = 32'hffff_ffff;
+      cache.data2.data[i] = 32'hffff_ffff;
+      cache.data3.data[i] = 32'hffff_ffff;
     end
 
     // // dump the cache
@@ -91,9 +91,16 @@ module TestBench;
     write_enable <= 0;
     #clk_tk;
 
-    if (!data_out_valid) $display("Test 3 passed");
-    else $display("Test 3 FAILED");
+    if (!data_out_valid) $display("Test 4 passed");
+    else $display("Test 4 FAILED");
 
+    // read; not valid
+    address <= 8;
+    write_enable <= 0;
+    #clk_tk;
+
+    if (data_out == 32'habcd_1234 && data_out_valid) $display("Test 5 passed");
+    else $display("Test 5 FAILED");
 
     #clk_tk;
     #clk_tk;

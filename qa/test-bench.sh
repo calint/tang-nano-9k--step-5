@@ -14,9 +14,8 @@ pwd
 # -g2005-sv 
 
 iverilog -Winfloop -pfileline=1 -o iverilog.vvp TestBench.v \
-    $SRCPTH/SPBRAM.v \
-    $SRCPTH/Cache.v \
-    $SRCPTH/TagMem.v
+    $SRCPTH/SDPB.v \
+    $SRCPTH/Cache.v
 
 vvp iverilog.vvp
 rm iverilog.vvp

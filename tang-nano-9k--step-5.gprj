@@ -6,8 +6,7 @@
     <Device name="GW1NR-9C" pn="GW1NR-LV9QN88PC6/I5">gw1nr9c-004</Device>
     <FileList>
         <File path="src/Cache.v" type="file.verilog" enable="1"/>
-        <File path="src/SPBRAM.v" type="file.verilog" enable="1"/>
-        <File path="src/TagMem.v" type="file.verilog" enable="1"/>
+        <File path="src/SDPB.v" type="file.verilog" enable="1"/>
         <File path="src/Top.v" type="file.verilog" enable="1"/>
         <File path="src/riscv.cst" type="file.cst" enable="1"/>
     </FileList>

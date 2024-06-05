@@ -1,12 +1,12 @@
 //
-// verilog that synthesizes to Single Port RAM
+// verilog that synthesizes to Semi Dual Port Block RAM
 //
 
 `default_nettype none
 `define DBG
 `define INFO
 
-module TagMem #(
+module SDPB #(
     parameter DATA_FILE = "",
     parameter ADDRESS_BITWIDTH = 16,
     parameter DATA_BITWIDTH = 32

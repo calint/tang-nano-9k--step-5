@@ -23,7 +23,7 @@ module Cache #(
   wire [LINE_IX_BITWIDTH-1:0] line_ix =  address[LINE_IX_BITWIDTH+COLUMN_IX_BITWIDTH+ZEROS_BITWIDTH-1-:LINE_IX_BITWIDTH];
   wire [TAG_BITWIDTH-1:0] line_tag_in = address[TAG_BITWIDTH+LINE_IX_BITWIDTH+COLUMN_IX_BITWIDTH+ZEROS_BITWIDTH-1-:TAG_BITWIDTH];
 
-  TagMem #(
+  SDPB #(
       .ADDRESS_BITWIDTH(LINE_IX_BITWIDTH)
   ) tag (
       .clk(clk),
@@ -38,7 +38,7 @@ module Cache #(
   wire line_dirty = line_tag_and_valid_dirty[LINE_DIRTY_BIT];
   wire [TAG_BITWIDTH-1:0] line_tag = line_tag_and_valid_dirty[TAG_BITWIDTH-1:0];
 
-  SPBRAM #(
+  SDPB #(
       .ADDRESS_BITWIDTH(LINE_IX_BITWIDTH)
   ) data0 (
       .clk(clk),
@@ -48,7 +48,7 @@ module Cache #(
       .data_out(data0_out)
   );
 
-  SPBRAM #(
+  SDPB #(
       .ADDRESS_BITWIDTH(LINE_IX_BITWIDTH)
   ) data1 (
       .clk(clk),
@@ -58,7 +58,7 @@ module Cache #(
       .data_out(data1_out)
   );
 
-  SPBRAM #(
+  SDPB #(
       .ADDRESS_BITWIDTH(LINE_IX_BITWIDTH)
   ) data2 (
       .clk(clk),
@@ -68,7 +68,7 @@ module Cache #(
       .data_out(data2_out)
   );
 
-  SPBRAM #(
+  SDPB #(
       .ADDRESS_BITWIDTH(LINE_IX_BITWIDTH)
   ) data3 (
       .clk(clk),
