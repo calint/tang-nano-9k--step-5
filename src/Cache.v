@@ -16,6 +16,8 @@ module Cache #(
   localparam COLUMN_IX_BITWIDTH = 2;  // 4 SPBRAMs
   localparam LINE_COUNT = 2 ** LINE_IX_BITWIDTH;
   localparam TAG_BITWIDTH = 32 - LINE_IX_BITWIDTH - COLUMN_IX_BITWIDTH - ZEROS_BITWIDTH;
+  localparam LINE_VALID_BIT = TAG_BITWIDTH;
+  localparam LINE_DIRTY_BIT = TAG_BITWIDTH + 1;
 
   wire [COLUMN_IX_BITWIDTH-1:0] column_ix = address[COLUMN_IX_BITWIDTH+ZEROS_BITWIDTH-1-:COLUMN_IX_BITWIDTH];
   wire [LINE_IX_BITWIDTH-1:0] line_ix =  address[LINE_IX_BITWIDTH+COLUMN_IX_BITWIDTH+ZEROS_BITWIDTH-1-:LINE_IX_BITWIDTH];
@@ -27,10 +29,14 @@ module Cache #(
       .clk(clk),
       .write_enable(write_enable_tag),
       .address(line_ix),
-      .data_in({{(30 - TAG_BITWIDTH) {1'b0}}, 1'b1, 1'b0, line_tag_in}),
+      .data_in({{(30 - TAG_BITWIDTH) {1'b0}}, 1'b0, 1'b1, line_tag_in}),
       // note: 30 because 2 bits are used for 'valid' and 'dirty' flags
-      .data_out(line_tag)
+      .data_out(line_tag_and_valid_dirty)
   );
+  wire [31:0] line_tag_and_valid_dirty;
+  wire line_valid = line_tag_and_valid_dirty[LINE_VALID_BIT];
+  wire line_dirty = line_tag_and_valid_dirty[LINE_DIRTY_BIT];
+  wire [TAG_BITWIDTH-1:0] line_tag = line_tag_and_valid_dirty[TAG_BITWIDTH-1:0];
 
   SPBRAM #(
       .ADDRESS_BITWIDTH(LINE_IX_BITWIDTH)
@@ -72,7 +78,6 @@ module Cache #(
       .data_out(data3_out)
   );
 
-  wire [31:0] line_tag;
   wire [31:0] data0_out;
   wire [31:0] data1_out;
   wire [31:0] data2_out;
@@ -89,12 +94,13 @@ module Cache #(
       1: data_out = data1_out;
       2: data_out = data2_out;
       3: data_out = data3_out;
+      default: data_out = 32'hffff_ffff;
     endcase
   end
 
   always @(*) begin
-    // check that the upper bits of the address is the same and cache line valid
-    data_out_valid = line_tag_in == line_tag[TAG_BITWIDTH-1:0] && line_tag[TAG_BITWIDTH+1] == 1;
+    // check that the upper bits of the address are the same and cache line valid
+    data_out_valid = line_valid && line_tag_in == line_tag;
   end
 
   always @(*) begin

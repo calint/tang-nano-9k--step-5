@@ -1,5 +1,5 @@
 $date
-	Wed Jun  5 09:34:15 2024
+	Wed Jun  5 14:25:18 2024
 $end
 $version
 	Icarus Verilog
@@ -8,65 +8,305 @@ $timescale
 	1ps
 $end
 $scope module TestBench $end
-$var wire 32 ! data_out [31:0] $end
-$var parameter 32 " clk_tk $end
-$var reg 32 # address [31:0] $end
-$var reg 1 $ clk $end
-$var reg 32 % data_in [31:0] $end
-$var reg 1 & write_enable $end
-$scope module data $end
-$var wire 16 ' address [15:0] $end
-$var wire 1 $ clk $end
-$var wire 32 ( data_in [31:0] $end
-$var wire 1 & write_enable $end
-$var parameter 32 ) ADDRESS_BITWIDTH $end
-$var parameter 32 * DATA_BITWIDTH $end
-$var parameter 0 + DATA_FILE $end
-$var reg 32 , data_out [31:0] $end
+$var wire 1 ! data_out_valid $end
+$var wire 32 " data_out [31:0] $end
+$var parameter 32 # clk_tk $end
+$var reg 32 $ address [31:0] $end
+$var reg 1 % clk $end
+$var reg 32 & data_in [31:0] $end
+$var reg 1 ' sys_rst_n $end
+$var reg 1 ( write_enable $end
+$var integer 32 ) i [31:0] $end
+$scope module cache $end
+$var wire 32 * address [31:0] $end
+$var wire 1 % clk $end
+$var wire 32 + data_in [31:0] $end
+$var wire 1 ' rst_n $end
+$var wire 1 ( write_enable $end
+$var wire 1 , line_valid $end
+$var wire 18 - line_tag_in [17:0] $end
+$var wire 32 . line_tag_and_valid_dirty [31:0] $end
+$var wire 18 / line_tag [17:0] $end
+$var wire 10 0 line_ix [9:0] $end
+$var wire 1 1 line_dirty $end
+$var wire 32 2 data3_out [31:0] $end
+$var wire 32 3 data2_out [31:0] $end
+$var wire 32 4 data1_out [31:0] $end
+$var wire 32 5 data0_out [31:0] $end
+$var wire 2 6 column_ix [1:0] $end
+$var parameter 32 7 COLUMN_IX_BITWIDTH $end
+$var parameter 32 8 LINE_COUNT $end
+$var parameter 36 9 LINE_DIRTY_BIT $end
+$var parameter 32 : LINE_IX_BITWIDTH $end
+$var parameter 35 ; LINE_VALID_BIT $end
+$var parameter 35 < TAG_BITWIDTH $end
+$var parameter 32 = ZEROS_BITWIDTH $end
+$var reg 32 > data_out [31:0] $end
+$var reg 1 ! data_out_valid $end
+$var reg 4 ? state [3:0] $end
+$var reg 1 @ write_enable_0 $end
+$var reg 1 A write_enable_1 $end
+$var reg 1 B write_enable_2 $end
+$var reg 1 C write_enable_3 $end
+$var reg 1 D write_enable_tag $end
+$scope module data0 $end
+$var wire 10 E address [9:0] $end
+$var wire 1 % clk $end
+$var wire 32 F data_in [31:0] $end
+$var wire 1 @ write_enable $end
+$var parameter 32 G ADDRESS_BITWIDTH $end
+$var parameter 32 H DATA_BITWIDTH $end
+$var parameter 0 I DATA_FILE $end
+$var reg 32 J data_out [31:0] $end
+$upscope $end
+$scope module data1 $end
+$var wire 10 K address [9:0] $end
+$var wire 1 % clk $end
+$var wire 32 L data_in [31:0] $end
+$var wire 1 A write_enable $end
+$var parameter 32 M ADDRESS_BITWIDTH $end
+$var parameter 32 N DATA_BITWIDTH $end
+$var parameter 0 O DATA_FILE $end
+$var reg 32 P data_out [31:0] $end
+$upscope $end
+$scope module data2 $end
+$var wire 10 Q address [9:0] $end
+$var wire 1 % clk $end
+$var wire 32 R data_in [31:0] $end
+$var wire 1 B write_enable $end
+$var parameter 32 S ADDRESS_BITWIDTH $end
+$var parameter 32 T DATA_BITWIDTH $end
+$var parameter 0 U DATA_FILE $end
+$var reg 32 V data_out [31:0] $end
+$upscope $end
+$scope module data3 $end
+$var wire 10 W address [9:0] $end
+$var wire 1 % clk $end
+$var wire 32 X data_in [31:0] $end
+$var wire 1 C write_enable $end
+$var parameter 32 Y ADDRESS_BITWIDTH $end
+$var parameter 32 Z DATA_BITWIDTH $end
+$var parameter 0 [ DATA_FILE $end
+$var reg 32 \ data_out [31:0] $end
+$upscope $end
+$scope module tag $end
+$var wire 10 ] address [9:0] $end
+$var wire 1 % clk $end
+$var wire 32 ^ data_in [31:0] $end
+$var wire 1 D write_enable $end
+$var parameter 32 _ ADDRESS_BITWIDTH $end
+$var parameter 32 ` DATA_BITWIDTH $end
+$var parameter 0 a DATA_FILE $end
+$var reg 32 b data_out [31:0] $end
+$upscope $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 $comment Show the parameter values. $end
 $dumpall
-b +
-b100000 *
-b10000 )
-b100 "
+b a
+b100000 `
+b1010 _
+b [
+b100000 Z
+b1010 Y
+b U
+b100000 T
+b1010 S
+b O
+b100000 N
+b1010 M
+b I
+b100000 H
+b1010 G
+b10 =
+b10010 <
+b10010 ;
+b1010 :
+b10011 9
+b10000000000 8
+b10 7
+b100 #
 $end
 #0
 $dumpvars
-bx ,
-b0 (
-b0 '
-0&
-b0 %
-1$
-b0 #
-bx !
+bx b
+b1xxxxxxxxxxxxxxxxxx ^
+bx ]
+bx \
+bx X
+bx W
+bx V
+bx R
+bx Q
+bx P
+bx L
+bx K
+bx J
+bx F
+bx E
+xD
+xC
+xB
+xA
+x@
+bx ?
+bx >
+bx 6
+bx 5
+bx 4
+bx 3
+bx 2
+x1
+bx 0
+bx /
+bx .
+bx -
+x,
+bx +
+bx *
+b10000000000 )
+x(
+0'
+bx &
+1%
+bx $
+bx "
+x!
 $end
 #2000
-0$
+0%
 #4000
-b10101011110011011110111100010010 %
-b10101011110011011110111100010010 (
-1&
-1$
+1'
+1%
 #6000
-0$
+0%
 #8000
-0&
-1$
+0C
+0B
+1A
+0@
+1D
+b1 6
+b0 0
+b0 E
+b0 K
+b0 Q
+b0 W
+b0 ]
+b1000000000000000000 ^
+b0 -
+1(
+b10101011110011011110111100010010 &
+b10101011110011011110111100010010 +
+b10101011110011011110111100010010 F
+b10101011110011011110111100010010 L
+b10101011110011011110111100010010 R
+b10101011110011011110111100010010 X
+b100 $
+b100 *
+1%
 #10000
-0$
+0%
 #12000
-b10101011110011011110111100010010 !
-b10101011110011011110111100010010 ,
-1$
+0!
+1B
+0A
+1D
+b0 "
+b0 >
+b0 /
+01
+0,
+b10 6
+b0 2
+b0 \
+b0 3
+b0 V
+b0 4
+b0 P
+b0 5
+b0 J
+b0 .
+b0 b
+b10101011110011010001001000110100 &
+b10101011110011010001001000110100 +
+b10101011110011010001001000110100 F
+b10101011110011010001001000110100 L
+b10101011110011010001001000110100 R
+b10101011110011010001001000110100 X
+b1000 $
+b1000 *
+1%
 #14000
-0$
+0%
 #16000
-1$
+1!
+1,
+b10101011110011011110111100010010 "
+b10101011110011011110111100010010 >
+0B
+0D
+b1 6
+b1000000000000000000 .
+b1000000000000000000 b
+b10101011110011011110111100010010 4
+b10101011110011011110111100010010 P
+0(
+b100 $
+b100 *
+1%
 #18000
-0$
+0%
 #20000
-1$
+b10101011110011010001001000110100 "
+b10101011110011010001001000110100 >
+b10 6
+b10101011110011010001001000110100 3
+b10101011110011010001001000110100 V
+b1000 $
+b1000 *
+1%
+#22000
+0%
+#24000
+b0 "
+b0 >
+b0 6
+b1 0
+b1 E
+b1 K
+b1 Q
+b1 W
+b1 ]
+b10000 $
+b10000 *
+1%
+#26000
+0%
+#28000
+0!
+0,
+b0 3
+b0 V
+b0 4
+b0 P
+b0 .
+b0 b
+1%
+#30000
+0%
+#32000
+1%
+#34000
+0%
+#36000
+1%
+#38000
+0%
+#40000
+1%
+#42000
+0%
+#44000
+1%

@@ -27,6 +27,7 @@ module SPBRAM #(
   reg [DATA_BITWIDTH-1:0] data[2**ADDRESS_BITWIDTH-1:0];
 
   always @(posedge clk) begin
+    // $display("RAM: write_enable: %d  address: %h  data_in: %h", write_enable, address, data_in);
     if (write_enable == 1) begin
       data[address] <= data_in;
     end
