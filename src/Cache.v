@@ -14,14 +14,16 @@ module Cache #(
     input wire [31:0] data_in,
     input wire write_enable
 );
+
   // 4 column cache line
   localparam ZEROS_BITWIDTH = 2;
-  localparam COLUMN_IX_BITWIDTH = 2;  // 4 SPBRAMs
+  localparam COLUMN_IX_BITWIDTH = 2;
   localparam LINE_COUNT = 2 ** LINE_IX_BITWIDTH;
   localparam TAG_BITWIDTH = 32 - LINE_IX_BITWIDTH - COLUMN_IX_BITWIDTH - ZEROS_BITWIDTH;
   localparam LINE_VALID_BIT = TAG_BITWIDTH;
   localparam LINE_DIRTY_BIT = TAG_BITWIDTH + 1;
 
+  // extract cache line info from current address
   wire [COLUMN_IX_BITWIDTH-1:0] column_ix = address[COLUMN_IX_BITWIDTH+ZEROS_BITWIDTH-1-:COLUMN_IX_BITWIDTH];
   wire [LINE_IX_BITWIDTH-1:0] line_ix =  address[LINE_IX_BITWIDTH+COLUMN_IX_BITWIDTH+ZEROS_BITWIDTH-1-:LINE_IX_BITWIDTH];
   wire [TAG_BITWIDTH-1:0] line_tag_in = address[TAG_BITWIDTH+LINE_IX_BITWIDTH+COLUMN_IX_BITWIDTH+ZEROS_BITWIDTH-1-:TAG_BITWIDTH];
@@ -37,6 +39,9 @@ module Cache #(
       .data_out(line_tag_and_valid_dirty)
   );
   wire [31:0] line_tag_and_valid_dirty;
+  reg write_enable_tag;
+
+  // extract portions of the combined tag, valid, dirty line info
   wire line_valid = line_tag_and_valid_dirty[LINE_VALID_BIT];
   wire line_dirty = line_tag_and_valid_dirty[LINE_DIRTY_BIT];
   wire [TAG_BITWIDTH-1:0] line_tag = line_tag_and_valid_dirty[TAG_BITWIDTH-1:0];
@@ -50,6 +55,8 @@ module Cache #(
       .data_in(data_in),
       .data_out(data0_out)
   );
+  wire [31:0] data0_out;
+  reg write_enable_0;
 
   SDPB #(
       .ADDRESS_BITWIDTH(LINE_IX_BITWIDTH)
@@ -60,6 +67,8 @@ module Cache #(
       .data_in(data_in),
       .data_out(data1_out)
   );
+  wire [31:0] data1_out;
+  reg write_enable_1;
 
   SDPB #(
       .ADDRESS_BITWIDTH(LINE_IX_BITWIDTH)
@@ -70,6 +79,8 @@ module Cache #(
       .data_in(data_in),
       .data_out(data2_out)
   );
+  wire [31:0] data2_out;
+  reg write_enable_2;
 
   SDPB #(
       .ADDRESS_BITWIDTH(LINE_IX_BITWIDTH)
@@ -80,23 +91,8 @@ module Cache #(
       .data_in(data_in),
       .data_out(data3_out)
   );
-
-  wire [31:0] data0_out;
-  wire [31:0] data1_out;
-  wire [31:0] data2_out;
   wire [31:0] data3_out;
-  reg write_enable_tag;
-  reg write_enable_0;
-  reg write_enable_1;
-  reg write_enable_2;
   reg write_enable_3;
-
-  // assign data_out = column_ix == 0 ? data0_out : 
-  //                   column_ix == 1 ? data1_out : 
-  //                   column_ix == 2 ? data2_out :
-  //                   column_ix == 3 ? data3_out : 32'hffff_ffff;
-
-  // assign data_out_valid = line_valid && line_tag_in == line_tag;
 
   always @(*) begin
     case (column_ix)
@@ -105,14 +101,9 @@ module Cache #(
       2: data_out = data2_out;
       3: data_out = data3_out;
     endcase
-  end
 
-  always @(*) begin
-    // check that the upper bits of the address are the same and cache line valid
-    data_out_valid = line_valid && line_tag_in == line_tag;
-  end
+    data_out_valid   = line_valid && line_tag_in == line_tag;
 
-  always @(*) begin
     write_enable_tag = 0;
     write_enable_0   = 0;
     write_enable_1   = 0;
@@ -127,19 +118,6 @@ module Cache #(
         3: write_enable_3 = 1;
       endcase
     end
-  end
-
-  always @(posedge clk) begin
-
-  end
-
-  reg [3:0] state;
-
-  always @(posedge clk) begin
-    case (state)
-      default: ;
-
-    endcase
   end
 
 endmodule
