@@ -1,5 +1,5 @@
 $date
-	Wed Jun  5 15:05:13 2024
+	Wed Jun  5 15:22:28 2024
 $end
 $version
 	Icarus Verilog
@@ -93,20 +93,20 @@ $scope module tag $end
 $var wire 10 ] address [9:0] $end
 $var wire 1 % clk $end
 $var wire 32 ^ data_in [31:0] $end
+$var wire 32 _ data_out [31:0] $end
 $var wire 1 D write_enable $end
-$var parameter 32 _ ADDRESS_BITWIDTH $end
-$var parameter 32 ` DATA_BITWIDTH $end
-$var parameter 0 a DATA_FILE $end
-$var reg 32 b data_out [31:0] $end
+$var parameter 32 ` ADDRESS_BITWIDTH $end
+$var parameter 32 a DATA_BITWIDTH $end
+$var parameter 0 b DATA_FILE $end
 $upscope $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 $comment Show the parameter values. $end
 $dumpall
-b a
-b100000 `
-b1010 _
+b b
+b100000 a
+b1010 `
 b [
 b100000 Z
 b1010 Y
@@ -130,7 +130,7 @@ b100 #
 $end
 #0
 $dumpvars
-bx b
+bx _
 b1xxxxxxxxxxxxxxxxxx ^
 bx ]
 bx \
@@ -177,12 +177,18 @@ $end
 #2000
 0%
 #4000
+0!
+b0 /
+01
+0,
 0C
 0B
 1A
 0@
 1D
 b1 6
+b0 .
+b0 _
 b0 0
 b0 E
 b0 K
@@ -205,18 +211,16 @@ b100 *
 #6000
 0%
 #8000
-0!
+1!
 1B
 0A
 1D
-b0 /
-01
-0,
+1,
 b11 "
 b11 >
 b10 6
-b0 .
-b0 b
+b1000000000000000000 .
+b1000000000000000000 _
 b1 5
 b1 J
 b10 4
@@ -237,17 +241,13 @@ b1000 *
 #10000
 0%
 #12000
-1!
 b10101011110011011110111100010010 "
 b10101011110011011110111100010010 >
-1,
 0B
 0D
 b1 6
 b10101011110011011110111100010010 4
 b10101011110011011110111100010010 P
-b1000000000000000000 .
-b1000000000000000000 b
 0(
 b100 $
 b100 *
@@ -266,9 +266,13 @@ b1000 *
 #18000
 0%
 #20000
+0!
 b1 "
 b1 >
+0,
 b0 6
+b0 .
+b0 _
 b1 0
 b1 E
 b1 K
@@ -281,13 +285,9 @@ b10000 *
 #22000
 0%
 #24000
-0!
-0,
 b110 "
 b110 >
 b1 6
-b0 .
-b0 b
 b101 5
 b101 J
 b110 4
