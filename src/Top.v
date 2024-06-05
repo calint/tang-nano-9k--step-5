@@ -30,6 +30,7 @@ module Top (
 
   reg [3:0] state;
 
+  // some code so that Gowin EDA doesn't optimize it away
   always @(posedge sys_clk) begin
     if (!sys_rst_n) begin
       state   <= 0;
