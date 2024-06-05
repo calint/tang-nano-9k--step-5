@@ -16,6 +16,7 @@ module Cache #(
   localparam COLUMN_IX_BITWIDTH = 2;  // 4 SPBRAMs
   localparam LINE_COUNT = 2 ** LINE_IX_BITWIDTH;
   localparam TAG_BITWIDTH = 32 - LINE_IX_BITWIDTH - COLUMN_IX_BITWIDTH - ZEROS_BITWIDTH;
+  localparam TAG_UPPER_BIT_COUNT = 32 - TAG_BITWIDTH;
 
   wire [COLUMN_IX_BITWIDTH-1:0] column_ix = address[COLUMN_IX_BITWIDTH+ZEROS_BITWIDTH-1-:COLUMN_IX_BITWIDTH];
   wire [LINE_IX_BITWIDTH-1:0] line_ix =  address[LINE_IX_BITWIDTH+COLUMN_IX_BITWIDTH+ZEROS_BITWIDTH-1-:LINE_IX_BITWIDTH];
@@ -27,7 +28,7 @@ module Cache #(
       .clk(clk),
       .write_enable(write_enable_tag),
       .address(line_ix),
-      .data_in({1, 0, line_tag_in}),  // 1: valid, 0: dirty
+      .data_in({{TAG_UPPER_BIT_COUNT{1'b0}}, line_tag_in}),
       .data_out(line_tag)
   );
 
@@ -95,13 +96,12 @@ module Cache #(
     data_out_valid = line_tag_in == line_tag;
   end
 
-
   always @(*) begin
+    write_enable_tag = 0;
     write_enable_0   = 0;
     write_enable_1   = 0;
     write_enable_2   = 0;
     write_enable_3   = 0;
-    write_enable_tag = 0;
     if (write_enable) begin
       write_enable_tag = 1;
       case (column_ix)
@@ -111,7 +111,6 @@ module Cache #(
         3: write_enable_3 = 1;
       endcase
     end
-
   end
 
   always @(posedge clk) begin

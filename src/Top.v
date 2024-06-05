@@ -9,7 +9,9 @@ module Top (
     input wire btn1
 );
 
-  Cache cache (
+  Cache #(
+      .LINE_IX_BITWIDTH(10)
+  ) cache (
       .clk(sys_clk),
       .rst_n(sys_rst_n),
       .address(address),
@@ -19,28 +21,46 @@ module Top (
       .write_enable(write_enable)
   );
 
-  reg [31:0] address = 0;
+  reg [31:0] address;
   wire [31:0] data_out;
   wire data_out_valid;
   reg [31:0] data_in;
   reg write_enable;
 
-  reg [3:0] state = 0;
+  reg [3:0] state;
 
   always @(posedge sys_clk) begin
-    case (state)
-      0: begin
-        data_in <= 32'h1234_5678;
-        write_enable <= 1;
-        state <= 1;
-      end
-      1: begin
-        led <= data_out[5:0];
-        write_enable <= 0;
-        address <= address + 4;
-        state <= 0;
-      end
-    endcase
+    if (!sys_rst_n) begin
+      state   <= 0;
+      address <= 0;
+    end else begin
+      case (state)
+        0: begin
+          led <= {data_out_valid, data_out[4:0]};
+          data_in <= 32'h1234_5678;
+          write_enable <= 1;
+          state <= 1;
+        end
+        1: begin
+          led <= {data_out_valid, data_out[4:0]};
+          write_enable <= 0;
+          address <= address + 4;
+          state <= 2;
+        end
+        2: begin
+          led <= {data_out_valid, data_out[4:0]};
+          data_in <= 32'h1234_5678;
+          write_enable <= 1;
+          state <= 3;
+        end
+        3: begin
+          led <= {data_out_valid, data_out[4:0]};
+          write_enable <= 0;
+          address <= address + 4;
+          state <= 0;
+        end
+      endcase
+    end
   end
 
 endmodule
