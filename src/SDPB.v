@@ -1,5 +1,5 @@
 //
-// verilog that synthesizes to Semi Dual Port Block RAM
+// synthesizes to Semi Dual Port Block RAM (SDPB) in Gowin EDA
 //
 
 `default_nettype none
